@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results for "<span id="query"></span>"</h1>
+    <ul id="results"></ul>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get("q");
+        document.getElementById("query").textContent = query;
+
+        // Example: Display mock results
+        const results = [
+            { title: "Result 1", url: "https://example.com/1" },
+            { title: "Result 2", url: "https://example.com/2" },
+            { title: "Result 3", url: "https://example.com/3" }
+        ];
+
+        const resultsList = document.getElementById("results");
+        results.forEach(result => {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="${result.url}" target="_blank">${result.title}</a>`;
+            resultsList.appendChild(li);
+        });
+    </script>
+</body>
+</html>

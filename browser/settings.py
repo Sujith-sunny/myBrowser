@@ -1,5 +1,5 @@
 HOMEPAGE = "https://www.google.com"
-WINDOW_TITLE = "My Custom Browser"
+WINDOW_TITLE = "WebEngine Browser"
 WINDOW_SIZE = (1200, 800)
 WINDOW_POSITION = (100, 100)
 ENABLE_JAVASCRIPT = True

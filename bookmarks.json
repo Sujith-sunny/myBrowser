@@ -10,5 +10,21 @@
     {
         "title": "Online Bookstore: Books, NOOK ebooks, Music, Movies & Toys | Barnes & Noble\u00ae",
         "url": "https://www.barnesandnoble.com/"
+    },
+    {
+        "title": "Search for Jobs | Careers",
+        "url": "https://lucidmotors.com/careers/search?location=casa-grande-az"
+    },
+    {
+        "title": "My Custom Browser",
+        "url": "http://127.0.0.1:8000/homepage.html"
+    },
+    {
+        "title": "Search Results",
+        "url": "http://127.0.0.1:8000/results.html?q=lucidmotors.com"
+    },
+    {
+        "title": "mewtru",
+        "url": "https://mewtru.com/"
     }
 ]

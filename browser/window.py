@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QToolBar, QAction, QMenu, QMessageBox, QStatusBar, QDialog, QVBoxLayout, QListWidget, QPushButton
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtCore import QUrl
+from urllib.parse import urlparse
 from . import settings
 from .bookmarks import BookmarkManager
 from .tabs import TabManager
@@ -18,6 +19,9 @@ class BrowserWindow(QMainWindow):
 
         self.init_ui()
         self.init_status_bar()
+
+        # Connect the TabManager's url_changed signal to update the URL bar
+        self.tabs.url_changed.connect(self.update_url_bar)
 
     def init_ui(self):
         # Toolbar
@@ -78,12 +82,37 @@ class BrowserWindow(QMainWindow):
         return self.tabs.currentWidget()
 
     def navigate_to_url(self):
-        url = QUrl(self.url_bar.text())
-        if url.scheme() == "":
-            url.setScheme("http")
-        self.current_browser().setUrl(url)
+        input_text = self.url_bar.text()
+        url = QUrl(input_text)
+
+        # Function to check if the input is a valid URL
+        def is_valid_url(string):
+            try:
+                QUrl(string).isValid()
+                return True
+            except:
+                return False
+
+        if is_valid_url(input_text):
+            # If it's a valid URL, navigate directly to the site
+            if url.scheme() == "":
+                url.setScheme("http")
+            self.current_browser().setUrl(url)
+        else:
+            # Otherwise, treat it as a search query
+            query = input_text
+            self.open_results_page(query)
+
+    def open_results_page(self, query):
+        try:
+            # Redirect to the search results page
+            results_url = f"http://127.0.0.1:5000/results.html?q={query}"
+            self.tabs.new_tab(results_url)
+        except Exception as e:
+            print(f"Error opening results page: {e}")
 
     def update_url_bar(self, url):
+        """Update the URL bar with the current URL."""
         self.url_bar.setText(url.toString())
 
     def update_url_bar_on_tab_change(self, index):

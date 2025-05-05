@@ -1,2 +1,5 @@
 PyQt5>=5.15
 PyQtWebEngine>=5.15
+flask
+requests
+flask-cors
