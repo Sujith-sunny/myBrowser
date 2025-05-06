@@ -40,26 +40,10 @@
             e.preventDefault();
             const query = document.getElementById("search-bar").value;
 
-            // Function to check if the input is a valid URL
-            function isValidURL(string) {
-                try {
-                    new URL(string);
-                    return true;
-                } catch (_) {
-                    return false;
-                }
-            }
-
             if (query) {
-                if (isValidURL(query)) {
-                    // If it's a valid URL, navigate directly to the site
-                    const url = query.startsWith("http") ? query : `http://${query}`;
-                    window.location.href = url;
-                } else {
-                    // Otherwise, redirect to the results page
-                    const resultsUrl = `http://127.0.0.1:8000/results.html?q=${encodeURIComponent(query)}`;
-                    window.location.href = resultsUrl;
-                }
+                // Redirect to the results page
+                const resultsUrl = `http://127.0.0.1:8000/results.html?q=${encodeURIComponent(query)}`;
+                window.location.href = resultsUrl;
             } else {
                 alert("Please enter a search query.");
             }

@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QLineEdit, QToolBar, QAction, QMenu, QM
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtCore import QUrl
 from urllib.parse import urlparse
+import requests  # Add this import for checking URL validity
 from . import settings
 from .bookmarks import BookmarkManager
 from .tabs import TabManager
@@ -85,19 +86,22 @@ class BrowserWindow(QMainWindow):
         input_text = self.url_bar.text()
         url = QUrl(input_text)
 
-        # Function to check if the input is a valid URL
+        # Function to check if the input is a valid and reachable URL
         def is_valid_url(string):
             try:
-                QUrl(string).isValid()
-                return True
-            except:
+                # Prepend https:// if no scheme is provided
+                if not string.startswith(("http://", "https://")):
+                    string = f"https://{string}"
+                response = requests.head(string, timeout=3)  # Check if the URL is reachable
+                return response.status_code < 400
+            except requests.RequestException:
                 return False
 
         if is_valid_url(input_text):
             # If it's a valid URL, navigate directly to the site
             if url.scheme() == "":
-                url.setScheme("http")
-            self.current_browser().setUrl(url)
+                url.setScheme("https")
+            self.current_browser().setUrl(QUrl(url.toString()))
         else:
             # Otherwise, treat it as a search query
             query = input_text
@@ -106,7 +110,7 @@ class BrowserWindow(QMainWindow):
     def open_results_page(self, query):
         try:
             # Redirect to the search results page
-            results_url = f"http://127.0.0.1:5000/results.html?q={query}"
+            results_url = f"http://127.0.0.1:8000/results.html?q={query}"
             self.tabs.new_tab(results_url)
         except Exception as e:
             print(f"Error opening results page: {e}")
