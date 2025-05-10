@@ -1,2 +1,3 @@
 virtualenv/
 browser/__pycache__
+.env

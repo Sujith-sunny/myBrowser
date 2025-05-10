@@ -95,5 +95,19 @@
             document.getElementById("results-container").innerHTML = "<p>No query provided.</p>";
         }
     </script>
+    <script>
+        document.getElementById("search-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const query = document.getElementById("search-bar").value;
+
+            if (query) {
+                // Redirect to the results page
+                const resultsUrl = `http://127.0.0.1:5000/results.html?q=${encodeURIComponent(query)}`;
+                window.location.href = resultsUrl;
+            } else {
+                alert("Please enter a search query.");
+            }
+        });
+    </script>
 </body>
 </html>

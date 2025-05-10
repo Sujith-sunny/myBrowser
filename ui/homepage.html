@@ -42,7 +42,7 @@
 
             if (query) {
                 // Redirect to the results page
-                const resultsUrl = `http://127.0.0.1:8000/results.html?q=${encodeURIComponent(query)}`;
+                const resultsUrl = `http://127.0.0.1:5000/results.html?q=${encodeURIComponent(query)}`;
                 window.location.href = resultsUrl;
             } else {
                 alert("Please enter a search query.");

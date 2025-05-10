@@ -110,7 +110,7 @@ class BrowserWindow(QMainWindow):
     def open_results_page(self, query):
         try:
             # Redirect to the search results page
-            results_url = f"http://127.0.0.1:8000/results.html?q={query}"
+            results_url = f"http://127.0.0.1:5000/results.html?q={query}"
             self.tabs.new_tab(results_url)
         except Exception as e:
             print(f"Error opening results page: {e}")
